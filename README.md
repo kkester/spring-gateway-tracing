@@ -2,10 +2,16 @@
 
 This PoC demonstrates the following architecture, design, and coding strategies specific to spring 3.X:
 
-* Spring Cloud Gateway(SCG) with session management and tracing
+* Spring Cloud Gateway(SCG) with tracing, Circuit Breaker, and session management persisted by `Redis`.
+* Custom Gateway and Global Filters for SCG.
 * Spring API applications build with tomcat(See api-web module) and netty(See api-netty module).
-* Spring session for both netty and tomcat
+* Spring session for both netty and tomcat persisted by `Redis`
 * Spring tracing for both netty and tomcat
+
+## Project Modules
+* gateway - module containing SCG application that will route traffic to one of the two backend applications contained in project
+* api-netty - module containing API application built using `webflux` starter
+* api-web - module containing API application built using `web` starter
 
 ## Spring Tracing with Micrometer
 Spring sleuth was deprecated in spring 2.X and was replaced by micrometer in spring 3.X.  Enabling tracing varies slightly depending on whether you are implementing it in tomcat vs netty.
