@@ -1,5 +1,28 @@
 # Project Overview
 
+This PoC demonstrates the following architecture, design, and coding strategies specific to spring 3.X:
+
+* Spring Cloud Gateway(SCG) with session management and tracing
+* Spring API applications build with tomcat(See api-web module) and netty(See api-netty module).
+* Spring session for both netty and tomcat
+* Spring tracing for both netty and tomcat
+
+## Spring Tracing with Micrometer
+Spring sleuth was deprecated in spring 2.X and was replaced by micrometer in spring 3.X.  Enabling tracing varies slightly depending on whether you are implementing it in tomcat vs netty.
+
+```
+	implementation 'io.micrometer:micrometer-tracing-bridge-brave'
+```
+
+### Netty implementation
+
+```java
+	public static void main(String[] args) {
+		Hooks.enableAutomaticContextPropagation();
+		SpringApplication.run(SpringApplication.class, args);
+	}
+```
+
 ### Reference Documentation
 For further reference, please consider the following sections:
 
