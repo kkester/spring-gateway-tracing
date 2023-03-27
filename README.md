@@ -9,9 +9,16 @@ This PoC demonstrates the following architecture, design, and coding strategies 
 * Spring tracing for both netty and tomcat
 
 ## Project Modules
-* gateway - module containing SCG application that will route traffic to one of the two backend applications contained in project
-* api-netty - module containing API application built using `webflux` starter
-* api-web - module containing API application built using `web` starter
+
+### gateway
+Module containing SCG application that will route traffic to one of the two backend applications contained in project.
+Gateway performs session management, but stores the session with a custom cookie name so as not to collide with downstream applications
+
+### api-netty
+Module containing API application built using `webflux` starter
+
+### api-web 
+Module containing API application built using `web` starter
 
 ## Spring Tracing with Micrometer
 Spring sleuth was deprecated in spring 2.X and was replaced by micrometer in spring 3.X.  Enabling tracing varies slightly depending on whether you are implementing it in tomcat vs netty.

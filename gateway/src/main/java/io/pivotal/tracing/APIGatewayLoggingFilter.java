@@ -26,7 +26,7 @@ public class APIGatewayLoggingFilter implements GlobalFilter, Ordered {
             .stream()
             .toList();
 
-        log.info("Request Headers: {}", headers);
+//        log.info("Request Headers: {}", headers);
         return chain.filter(exchange).then(Mono.fromRunnable(() -> {
             log.info("Response: {} with {}", exchange.getResponse().getStatusCode(), exchange.getResponse().getCookies());
         }));

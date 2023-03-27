@@ -21,11 +21,25 @@ public class HelloSessionGatewayFilterFactory extends AbstractGatewayFilterFacto
     public static class HelloSession implements GatewayFilter {
         @Override
         public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+            if (!exchange.getRequest().getPath().toString().contains("/new")) {
+                return exchange.getSession()
+                    .map(session -> {
+                        log.info("Received request {} for greeting {} and {}",
+                            session.getId(),
+                            session.getAttribute("NEW_SESSION"),
+                            session.getAttribute("TODO_SESSION"));
+                        return session;
+                    })
+                    .then(chain.filter(exchange));
+            }
             return exchange.getSession()
                 .map(session -> {
-                    session.getAttributes().putIfAbsent("TODO_SESSION", "");
-                    session.getAttributes().put("TODO_SESSION", session.getAttribute("TODO_SESSION") + "Hello");
-                    log.info("Received request for greeting {}", (Object)session.getAttribute("TODO_SESSION"));
+                    session.getAttributes().putIfAbsent("NEW_SESSION", "");
+                    session.getAttributes().put("NEW_SESSION", session.getAttribute("NEW_SESSION") + "NEW");
+                    log.info("Received request {} for new {} and {}",
+                        session.getId(),
+                        session.getAttribute("NEW_SESSION"),
+                        session.getAttribute("TODO_SESSION"));
                     return session;
                 })
                 .then(chain.filter(exchange));

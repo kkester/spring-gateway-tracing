@@ -5,6 +5,7 @@ spring:
     redis:
       save-mode: always
       namespace: 'spring:session'
+    timeout: 10000
   cloud:
     gateway:
       routes:
@@ -23,6 +24,14 @@ spring:
 #              args:
 #                redirectLocation: "http://localhost:8080/public/hello.html"
 #            - name: TokenRelay
+
+server:
+  reactive:
+    session:
+      cookie:
+        name: SESSION-${spring.application.name}
+        max-age: 1800
+        secure: true
 
 management:
   tracing:

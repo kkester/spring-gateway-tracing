@@ -9,9 +9,9 @@ import org.springframework.cloud.circuitbreaker.resilience4j.ReactiveResilience4
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JConfigBuilder;
 import org.springframework.cloud.client.circuitbreaker.Customizer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.event.EventListener;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.session.events.SessionCreatedEvent;
+import org.springframework.session.web.http.CookieHttpSessionIdResolver;
+import org.springframework.session.web.http.DefaultCookieSerializer;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.server.RouterFunction;
@@ -64,8 +64,11 @@ public class GatewayApplication {
         }
     }
 
-    @EventListener
-    public void sessionCreated(SessionCreatedEvent sessionCreatedEvent) {
-        log.info("Session Created {}", sessionCreatedEvent);
+//    @Bean
+    public CookieHttpSessionIdResolver customize(CookieHttpSessionIdResolver cookieHttpSessionIdResolver) {
+        DefaultCookieSerializer defaultCookieSerializer = new DefaultCookieSerializer();
+        defaultCookieSerializer.setUseBase64Encoding(true);
+        cookieHttpSessionIdResolver.setCookieSerializer(defaultCookieSerializer);
+        return cookieHttpSessionIdResolver;
     }
 }

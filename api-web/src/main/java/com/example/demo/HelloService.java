@@ -18,7 +18,6 @@ public class HelloService {
         Span continuedSpan = tracer.nextSpan().name("Greet This");
         try (Tracer.SpanInScope ws = this.tracer.withSpan(continuedSpan.start())) {
             log.info("Service is on the case");
-            // ...
             // You can log an event on a span
             continuedSpan.event("taxCalculated");
         } finally {
