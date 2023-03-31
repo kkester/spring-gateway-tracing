@@ -19,14 +19,13 @@ import static java.util.stream.Collectors.groupingBy;
 @Slf4j
 public class APIGatewayLoggingFilter implements GlobalFilter, Ordered {
 
-
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         var headers = exchange.getRequest().getHeaders().entrySet()
             .stream()
             .toList();
 
-//        log.info("Request Headers: {}", headers);
+        log.info("Request Headers: {}", headers);
         return chain.filter(exchange).then(Mono.fromRunnable(() -> {
             log.info("Response: {} with {}", exchange.getResponse().getStatusCode(), exchange.getResponse().getCookies());
         }));

@@ -6,6 +6,22 @@ spring:
       save-mode: always
       namespace: 'spring:session'
     timeout: 10000
+  security:
+    filter:
+      order: 5
+    oauth2:
+      client:
+        registration:
+          gateway:
+            provider: my-provider
+            client-id: tracer
+            client-secret: R3uGbQ7oIxmVCBIREfdZ5DCXNXY6SFIE
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://localhost:8080/login/oauth2/code/{registrationId}"
+            scope: openid
+        provider:
+          my-provider:
+            issuer-uri: http://localhost:9990/auth/realms/tracer
   cloud:
     gateway:
       routes:
@@ -14,15 +30,15 @@ spring:
           predicates:
             - Path=/**
           filters:
+#            - name: RedirectFilter
+#              args:
+#                redirectLocation: "http://localhost:8080/public/hello.html"
             - name: HelloSession
-            - name: SaveSession
+            - name: TokenRelay
 #            - name: CircuitBreaker
 #              args:
 #                name: "exampleSlowCircuitBreaker"
 #                fallbackUri: "forward:/fallback/account"
-#            - name: RedirectFilter
-#              args:
-#                redirectLocation: "http://localhost:8080/public/hello.html"
 #            - name: TokenRelay
 
 server:
@@ -43,4 +59,18 @@ logging:
   pattern:
     level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
 
-
+gateway:
+  terms:
+    - id: tracerService
+      path: "/new"
+      host: "localhost:8080"
+    - id: noop
+      path: "/test"
+      host: "localhost:8080"
+  security:
+    - id: tracerService
+      path: "/old"
+      host: "localhost:8080"
+    - id: noop
+      path: "/test"
+      host: "localhost:8080"

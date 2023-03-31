@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  redis:
+    restart: always
+    image: bitnami/redis
+    ports:
+      - "6379:6379"
+    environment:
+      ALLOW_EMPTY_PASSWORD: "yes"
+
+  sso:
+    image: jboss/keycloak
+    restart: always
+    ports:
+      - "9990:8080"
+    volumes:
+      - ./keycloak:/tmp/export/
+    command:
+      -Dkeycloak.migration.action=import
+      -Dkeycloak.migration.provider=singleFile
+      -Dkeycloak.migration.realmName=ammo-safety-planner
+      -Dkeycloak.migration.file=/tmp/export/keycloak-export.json
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - DB_VENDOR=h2

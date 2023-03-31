@@ -12,28 +12,36 @@ This PoC demonstrates the following architecture, design, and coding strategies 
 
 ### gateway
 Module containing SCG application that will route traffic to one of the two backend applications contained in project.
-Gateway performs session management, but stores the session with a custom cookie name so as not to collide with downstream applications
+Gateway performs session management, but stores the session with a custom cookie name so as not to collide with downstream applications.
 
 ### api-netty
-Module containing API application built using `webflux` starter
+Module containing API application built using `webflux` starter.
 
 ### api-web 
-Module containing API application built using `web` starter
+Module containing API application built using `web` starter.
 
 ## Spring Tracing with Micrometer
 Spring sleuth was deprecated in spring 2.X and was replaced by micrometer in spring 3.X.  Enabling tracing varies slightly depending on whether you are implementing it in tomcat vs netty.
 
 ```
-	implementation 'io.micrometer:micrometer-tracing-bridge-brave'
+implementation 'io.micrometer:micrometer-tracing-bridge-brave'
 ```
 
 ### Netty implementation
 
 ```java
-	public static void main(String[] args) {
-		Hooks.enableAutomaticContextPropagation();
-		SpringApplication.run(SpringApplication.class, args);
-	}
+public static void main(String[] args) {
+    Hooks.enableAutomaticContextPropagation();
+    SpringApplication.run(SpringApplication.class, args);
+}
+```
+
+To make micrometer compatible with older applications still on sleuth, add the following configuration property to the sleuth application.
+```yaml
+spring:
+  sleuth:
+    propagation:
+      type: w3c,b3
 ```
 
 ### Reference Documentation
