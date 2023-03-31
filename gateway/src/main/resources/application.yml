@@ -14,14 +14,14 @@ spring:
         registration:
           gateway:
             provider: my-provider
-            client-id: tracer
+            client-id: api-gateway
             client-secret: R3uGbQ7oIxmVCBIREfdZ5DCXNXY6SFIE
             authorization-grant-type: authorization_code
             redirect-uri: "http://localhost:8080/login/oauth2/code/{registrationId}"
             scope: openid
         provider:
           my-provider:
-            issuer-uri: http://localhost:9990/auth/realms/tracer
+            issuer-uri: http://localhost:9990/auth/realms/api-gateway
   cloud:
     gateway:
       routes:
@@ -65,12 +65,12 @@ gateway:
       path: "/new"
       host: "localhost:8080"
     - id: noop
-      path: "/test"
+      path: "/noop"
       host: "localhost:8080"
   security:
     - id: tracerService
       path: "/old"
       host: "localhost:8080"
     - id: noop
-      path: "/test"
+      path: "/noop"
       host: "localhost:8080"
