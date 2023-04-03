@@ -5,10 +5,7 @@ spring:
     redis:
       save-mode: always
       namespace: 'spring:session'
-    timeout: 10000
   security:
-    filter:
-      order: 5
     oauth2:
       client:
         registration:
@@ -25,14 +22,11 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: tracerService
+        - id: apiService
           uri: ${TRACER_SERVICE_HOST}
           predicates:
             - Path=/**
           filters:
-#            - name: RedirectFilter
-#              args:
-#                redirectLocation: "http://localhost:8080/public/hello.html"
             - name: HelloSession
             - name: TokenRelay
 #            - name: CircuitBreaker
@@ -61,16 +55,12 @@ logging:
 
 gateway:
   terms:
-    - id: tracerService
+    - id: apiService
       path: "/new"
-      host: "localhost:8080"
     - id: noop
-      path: "/noop"
       host: "localhost:8080"
   security:
-    - id: tracerService
+    - id: apiService
       path: "/old"
-      host: "localhost:8080"
     - id: noop
-      path: "/noop"
       host: "localhost:8080"

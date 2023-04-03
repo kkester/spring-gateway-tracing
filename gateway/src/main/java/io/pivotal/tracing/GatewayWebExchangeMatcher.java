@@ -6,6 +6,7 @@ import org.springframework.security.web.server.util.matcher.ServerWebExchangeMat
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import java.net.InetSocketAddress;
 import java.util.Collection;
 
 @AllArgsConstructor
@@ -16,8 +17,10 @@ public class GatewayWebExchangeMatcher implements ServerWebExchangeMatcher {
     @Override
     public Mono<MatchResult> matches(ServerWebExchange exchange) {
         RequestPath requestPath = exchange.getRequest().getPath();
+        InetSocketAddress hostHeader = exchange.getRequest().getHeaders().getHost();
         return matchingAppConfigs.stream()
-            .filter(c -> requestPath.value().contains(c.getPath()))
+            .filter(c -> c.getPath() == null || requestPath.value().matches(c.getPath()))
+            .filter(c -> hostHeader == null || c.getHost() == null || hostHeader.getHostString().matches(c.getPath()))
             .findFirst()
             .map(c -> MatchResult.match())
             .orElse(MatchResult.notMatch());
