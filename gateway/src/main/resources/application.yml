@@ -22,18 +22,41 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: apiService
-          uri: ${TRACER_SERVICE_HOST}
+        - id: helloServiceSwaggerConfig
+          uri: http://localhost:8081
           predicates:
-            - Path=/**
+            - Path=/hello-service/**
+          filters:
+            - name: TokenRelay
+            - name: StripPrefix
+              args:
+                parts: 1
+        - id: helloService
+          uri: http://localhost:8081
+          predicates:
+            - Path=/hello/**
           filters:
             - name: HelloSession
+            - name: LocalResponseCache
             - name: TokenRelay
 #            - name: CircuitBreaker
 #              args:
 #                name: "exampleSlowCircuitBreaker"
 #                fallbackUri: "forward:/fallback/account"
 #            - name: TokenRelay
+        - id: greetingServiceSwaggerConfig
+          uri: http://localhost:8082
+          predicates:
+            - Path=/greeting-service/**
+          filters:
+            - name: TokenRelay
+            - name: StripPrefix
+              args:
+                parts: 1
+        - id: greetingService
+          uri: http://localhost:8082
+          predicates:
+            - Path=/greeting/**
 
 server:
   reactive:
@@ -58,9 +81,19 @@ gateway:
     - id: apiService
       path: "/new"
     - id: noop
-      host: "localhost:8080"
+      path: "/greeting"
   security:
     - id: apiService
       path: "/old"
     - id: noop
-      host: "localhost:8080"
+      path: "/greeting"
+
+springdoc:
+  swagger-ui:
+    urls:
+      - url: http://localhost:8080/hello-service/v3/api-docs
+        display-name: Hello
+        name: heello
+      - url: http://localhost:8080/greeting-service/v3/api-docs
+        display-name: Greeting
+        name: greeting

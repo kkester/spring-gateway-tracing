@@ -1,6 +1,6 @@
 # Project Overview
 
-This PoC demonstrates the following architecture, design, and coding strategies specific to spring 3.X:
+This PoC demonstrates the following architecture, design, and coding strategies specific to spring version 3.X:
 
 * Spring Cloud Gateway(SCG) with Security, tracing, Circuit Breaker, and session management persisted by `Redis`.
 * SCG implemented as a OAuth resource client integrated with `Keycloak` authorization server.
@@ -8,6 +8,7 @@ This PoC demonstrates the following architecture, design, and coding strategies 
 * Spring API applications build with tomcat(See api-web module) and netty(See api-netty module).
 * Spring session for both netty and tomcat persisted by `Redis`
 * Spring tracing for both netty and tomcat
+* Swagger API Docs in web, webflux, and aggregated together by the SCG
 
 ## SCG Architecture
 SCG behavior can be customized with the implementation of filters.  SCG has a number of different types of filters.  

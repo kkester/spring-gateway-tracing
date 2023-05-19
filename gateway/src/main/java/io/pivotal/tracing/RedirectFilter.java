@@ -15,7 +15,7 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
-@Component
+//@Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @Slf4j
 public class RedirectFilter implements WebFilter {

@@ -63,12 +63,4 @@ public class GatewayApplication {
             return "Fallback Hello";
         }
     }
-
-//    @Bean
-    public CookieHttpSessionIdResolver customize(CookieHttpSessionIdResolver cookieHttpSessionIdResolver) {
-        DefaultCookieSerializer defaultCookieSerializer = new DefaultCookieSerializer();
-        defaultCookieSerializer.setUseBase64Encoding(true);
-        cookieHttpSessionIdResolver.setCookieSerializer(defaultCookieSerializer);
-        return cookieHttpSessionIdResolver;
-    }
 }

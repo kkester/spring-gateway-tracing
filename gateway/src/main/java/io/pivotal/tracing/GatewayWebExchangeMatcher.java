@@ -20,7 +20,7 @@ public class GatewayWebExchangeMatcher implements ServerWebExchangeMatcher {
         InetSocketAddress hostHeader = exchange.getRequest().getHeaders().getHost();
         return matchingAppConfigs.stream()
             .filter(c -> c.getPath() == null || requestPath.value().matches(c.getPath()))
-            .filter(c -> hostHeader == null || c.getHost() == null || hostHeader.getHostString().matches(c.getPath()))
+            .filter(c -> hostHeader == null || c.getHost() == null || hostHeader.getHostString().matches(c.getHost()))
             .findFirst()
             .map(c -> MatchResult.match())
             .orElse(MatchResult.notMatch());
