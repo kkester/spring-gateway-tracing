@@ -10,6 +10,5 @@ import java.util.List;
 @Configuration
 @ConfigurationProperties(prefix = "gateway")
 public class GatewayConfig {
-    private List<GatewayAppConfig> terms;
     private List<GatewayAppConfig> security;
 }

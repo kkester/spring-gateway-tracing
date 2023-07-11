@@ -77,16 +77,11 @@ logging:
     level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
 
 gateway:
-  terms:
-    - id: apiService
-      path: "/new"
-    - id: noop
-      path: "/greeting"
   security:
     - id: apiService
-      path: "/old"
+      path: "/hello-service/.*"
     - id: noop
-      path: "/greeting"
+      path: "/greeting-service/.*"
 
 springdoc:
   swagger-ui:

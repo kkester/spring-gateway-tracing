@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -14,7 +16,7 @@ public class HelloService {
 
     private final Tracer tracer;
 
-    public String greeting() {
+    public Hello getHello() {
         Span continuedSpan = tracer.nextSpan().name("Greet This");
         try (Tracer.SpanInScope ws = this.tracer.withSpan(continuedSpan.start())) {
             log.info("Service is on the case");
@@ -23,6 +25,6 @@ public class HelloService {
         } finally {
             continuedSpan.end();
         }
-        return "hello";
+        return Hello.builder().message("Hello").timestamp(Instant.now()).build();
     }
 }
