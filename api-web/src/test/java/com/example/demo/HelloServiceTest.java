@@ -9,13 +9,13 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class HelloServiceTest {
+class HelloServiceTest {
 
     @InjectMocks
     HelloService helloService;
 
     @Test
     void foo() {
-        helloService.greeting();
+        helloService.getHello();
     }
 }
