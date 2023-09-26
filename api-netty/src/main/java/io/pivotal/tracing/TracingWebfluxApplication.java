@@ -6,10 +6,7 @@ import reactor.core.publisher.Hooks;
 
 @SpringBootApplication
 public class TracingWebfluxApplication {
-
 	public static void main(String[] args) {
-		Hooks.enableAutomaticContextPropagation();
 		SpringApplication.run(TracingWebfluxApplication.class, args);
 	}
-
 }

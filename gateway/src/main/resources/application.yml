@@ -1,70 +1,25 @@
 spring:
   application:
     name: api-gateway
-  session:
-    redis:
-      save-mode: always
-      namespace: 'spring:session'
-  security:
-    oauth2:
-      client:
-        registration:
-          gateway:
-            provider: my-provider
-            client-id: api-gateway
-            client-secret: R3uGbQ7oIxmVCBIREfdZ5DCXNXY6SFIE
-            authorization-grant-type: authorization_code
-            redirect-uri: "http://localhost:8080/login/oauth2/code/{registrationId}"
-            scope: openid
-        provider:
-          my-provider:
-            issuer-uri: http://localhost:9990/auth/realms/api-gateway
   cloud:
     gateway:
       routes:
-        - id: helloServiceSwaggerConfig
-          uri: http://localhost:8081
-          predicates:
-            - Path=/hello-service/**
-          filters:
-            - name: TokenRelay
-            - name: StripPrefix
-              args:
-                parts: 1
         - id: helloService
           uri: http://localhost:8081
           predicates:
-            - Path=/hello/**
+            - Path=/hello-api/**
           filters:
-            - name: HelloSession
-            - name: LocalResponseCache
-            - name: TokenRelay
-#            - name: CircuitBreaker
-#              args:
-#                name: "exampleSlowCircuitBreaker"
-#                fallbackUri: "forward:/fallback/account"
-#            - name: TokenRelay
-        - id: greetingServiceSwaggerConfig
-          uri: http://localhost:8082
-          predicates:
-            - Path=/greeting-service/**
-          filters:
-            - name: TokenRelay
             - name: StripPrefix
               args:
                 parts: 1
         - id: greetingService
           uri: http://localhost:8082
           predicates:
-            - Path=/greeting/**
-
-server:
-  reactive:
-    session:
-      cookie:
-        name: SESSION-${spring.application.name}
-        max-age: 1800
-        secure: true
+            - Path=/greeting-api/**
+          filters:
+            - name: StripPrefix
+              args:
+                parts: 1
 
 management:
   tracing:
@@ -76,19 +31,12 @@ logging:
   pattern:
     level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
 
-gateway:
-  security:
-    - id: apiService
-      path: "/hello-service/.*"
-    - id: noop
-      path: "/greeting-service/.*"
-
 springdoc:
   swagger-ui:
     urls:
-      - url: http://localhost:8080/hello-service/v3/api-docs
+      - url: http://localhost:8080/hello-api/v3/api-docs
         display-name: Hello
-        name: heello
-      - url: http://localhost:8080/greeting-service/v3/api-docs
+        name: hello
+      - url: http://localhost:8080/greeting-api/v3/api-docs
         display-name: Greeting
         name: greeting

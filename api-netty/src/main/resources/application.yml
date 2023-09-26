@@ -1,6 +1,3 @@
-server:
-  port: 8082
-
 spring:
   application:
     name: api
@@ -8,6 +5,9 @@ spring:
     redis:
       flush-mode: on_save
       namespace: 'spring:session'
+
+server:
+  port: 8082
 
 management:
   tracing:
