@@ -1,10 +1,9 @@
 spring:
   application:
-    name: api
-  session:
-    redis:
-      flush-mode: on_save
-      namespace: 'spring:session'
+    name: netty-tracing
+  config:
+    import:
+      - config/security.yaml
 
 server:
   port: 8082

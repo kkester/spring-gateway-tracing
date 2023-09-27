@@ -1,24 +1,24 @@
 package io.pivotal.tracing;
 
-import io.micrometer.tracing.SpanName;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @Service
+@RequiredArgsConstructor
 @Slf4j
 public class GreetingService {
 
-    private final WebClient webClient = WebClient.builder()
-        .baseUrl("http://localhost:8080/hello-api")
-        .build();
+    private final WebClient webClient;
 
-    @SpanName("Handle Greeting")
     public Mono<Greeting> getGreeting() {
         return webClient.get()
             .uri("/hello")
             .retrieve()
+            .onStatus(httpStatusCode -> !httpStatusCode.is2xxSuccessful(), ClientResponse::createException)
             .bodyToMono(Hello.class)
             .map(h -> Greeting.builder()
                 .type("Hello")

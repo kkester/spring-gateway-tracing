@@ -14,7 +14,7 @@ public class GreetingController {
     private final GreetingService greetingService;
 
     @GetMapping("/greeting")
-    Mono<Greeting> getGreeting() {
+    public Mono<Greeting> getGreeting() {
         return greetingService.getGreeting();
     }
 }

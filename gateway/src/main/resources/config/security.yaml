@@ -1,0 +1,14 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          sso:
+            scope: openid
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseScheme}://{baseHost}{basePort}/{action}/oauth2/code/{registrationId}"
+            client-id: api-gateway
+            client-secret: 5751392f-23a5-41db-ad8b-360afa5b3dbe
+        provider:
+          sso:
+            issuer-uri: "${IDP_DOMAIN:http://localhost:10000}/realms/api-gateway"

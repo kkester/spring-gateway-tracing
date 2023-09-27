@@ -37,7 +37,7 @@
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
-      "secret": "R3uGbQ7oIxmVCBIREfdZ5DCXNXY6SFIE",
+      "secret": "5751392f-23a5-41db-ad8b-360afa5b3dbe",
       "redirectUris": [
         "*"
       ],

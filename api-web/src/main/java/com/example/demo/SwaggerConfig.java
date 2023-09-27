@@ -13,7 +13,7 @@ public class SwaggerConfig {
     @Bean
     OpenAPI openAPI() {
         return new OpenAPI()
-            .servers(List.of(new Server().url("http://localhost:8080/hello-api").description("Hello Service Server")))
+            .servers(List.of(new Server().url("http://localhost:9000/future").description("Hello Service Server")))
             .info(new Info().title("Hello Service"));
     }
 }

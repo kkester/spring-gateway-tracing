@@ -4,11 +4,9 @@ server:
 spring:
   application:
     name: web-tracing
-  session:
-    timeout: 10000
-    redis:
-      namespace: 'spring:session'
-      save-mode: always
+  config:
+    import:
+      - config/security.yaml
 
 management:
   tracing:

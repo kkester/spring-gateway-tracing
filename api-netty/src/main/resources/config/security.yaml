@@ -1,0 +1,17 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          sso:
+            authorization-grant-type: client_credentials
+            client-id: api-gateway
+            client-secret: 5751392f-23a5-41db-ad8b-360afa5b3dbe
+        provider:
+          sso:
+            token-uri: "${IDP_DOMAIN:http://localhost:10000}/realms/api-gateway/protocol/openid-connect/token"
+      resourceserver:
+        opaque-token:
+          client-id: api-gateway
+          client-secret: 5751392f-23a5-41db-ad8b-360afa5b3dbe
+          introspection-uri: "${IDP_DOMAIN:http://localhost:10000}/realms/api-gateway/protocol/openid-connect/token/introspect"

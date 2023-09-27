@@ -1,6 +1,12 @@
+server:
+  port: 9000
+
 spring:
   application:
     name: api-gateway
+  config:
+    import:
+      - config/security.yaml
   cloud:
     gateway:
       routes:
@@ -9,6 +15,7 @@ spring:
           predicates:
             - Path=/hello-api/**
           filters:
+            - name: TokenRelay
             - name: StripPrefix
               args:
                 parts: 1
@@ -17,6 +24,7 @@ spring:
           predicates:
             - Path=/greeting-api/**
           filters:
+            - name: TokenRelay
             - name: StripPrefix
               args:
                 parts: 1
@@ -34,9 +42,9 @@ logging:
 springdoc:
   swagger-ui:
     urls:
-      - url: http://localhost:8080/hello-api/v3/api-docs
+      - url: http://localhost:9000/hello-api/v3/api-docs
         display-name: Hello
         name: hello
-      - url: http://localhost:8080/greeting-api/v3/api-docs
+      - url: http://localhost:9000/greeting-api/v3/api-docs
         display-name: Greeting
         name: greeting

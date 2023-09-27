@@ -11,10 +11,13 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'io.micrometer:micrometer-tracing-bridge-brave'
-	implementation 'org.springdoc:springdoc-openapi-starter-webflux-api:2.0.4'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-api:2.0.4'
+//	implementation 'io.micrometer:micrometer-tracing-bridge-brave'
 
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
