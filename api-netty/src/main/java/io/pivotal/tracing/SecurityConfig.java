@@ -27,7 +27,7 @@ import java.time.Duration;
 @Configuration
 public class SecurityConfig {
 
-    private static final String HELLO_SERVICE_BASE_URL = "http://localhost:9000/tesseract";
+    private static final String HELLO_SERVICE_BASE_URL = "http://localhost:8080/hello-api";
 
     @Bean
     @SneakyThrows

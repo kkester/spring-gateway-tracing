@@ -1,5 +1,5 @@
 server:
-  port: 9000
+  port: 8080
 
 spring:
   application:
@@ -42,9 +42,9 @@ logging:
 springdoc:
   swagger-ui:
     urls:
-      - url: http://localhost:9000/hello-api/v3/api-docs
+      - url: http://localhost:8080/hello-api/v3/api-docs
         display-name: Hello
         name: hello
-      - url: http://localhost:9000/greeting-api/v3/api-docs
+      - url: http://localhost:8080/greeting-api/v3/api-docs
         display-name: Greeting
         name: greeting

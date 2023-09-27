@@ -15,6 +15,7 @@ public class GreetingService {
     private final WebClient webClient;
 
     public Mono<Greeting> getGreeting() {
+        log.info("Initiating hello request");
         return webClient.get()
             .uri("/hello")
             .retrieve()

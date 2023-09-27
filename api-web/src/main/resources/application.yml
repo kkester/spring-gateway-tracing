@@ -1,12 +1,12 @@
-server:
-  port: 8081
-
 spring:
   application:
     name: web-tracing
   config:
     import:
       - config/security.yaml
+
+server:
+  port: 8081
 
 management:
   tracing:
@@ -17,3 +17,4 @@ management:
 logging:
   pattern:
     level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+
