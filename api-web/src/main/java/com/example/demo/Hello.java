@@ -6,7 +6,7 @@ import lombok.Data;
 import java.time.Instant;
 
 @Data
-@Builder
+@Builder(toBuilder = true)
 public class Hello {
     private String message;
     private Instant timestamp;

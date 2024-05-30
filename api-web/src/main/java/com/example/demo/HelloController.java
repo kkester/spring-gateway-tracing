@@ -5,15 +5,14 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.http.CacheControl;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -43,6 +42,12 @@ public class HelloController {
             .header(HttpHeaders.VARY, "x-batman")
             .header(HttpHeaders.VARY, "x-ironman")
             .body(helloService.getHello());
+    }
+
+    @PostMapping(value = "/hello", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Hello> createMovement(@ParameterObject @ModelAttribute Hello hello, @RequestPart MultipartFile[] files) {
+        Hello savedHello = helloService.createHello(hello, List.of(files));
+        return new ResponseEntity<>(savedHello, HttpStatus.CREATED);
     }
 
     @EventListener

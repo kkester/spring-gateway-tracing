@@ -2,8 +2,8 @@
   "id": "api-gateway",
   "realm": "api-gateway",
   "enabled": true,
-  "displayName": "Tracer",
-  "displayNameHtml": "<div class=\"kc-logo-text\"><span>Tracer</span></div>",
+  "displayName": "Keycloak",
+  "displayNameHtml": "<div class=\"kc-logo-text\"><span>Keycloak</span></div>",
   "users": [
     {
       "id": "e2ddd5fa-f46e-4365-93ed-7581fea76e44",

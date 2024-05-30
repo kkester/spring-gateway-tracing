@@ -50,6 +50,6 @@ public class SecurityConfig {
                 return this.requestCache.getRedirectUri(exchange).defaultIfEmpty(this.location)
                     .flatMap(l -> this.redirectStrategy.sendRedirect(exchange, l));
             });
-        return http.build();
+        return http.csrf().disable().build();
     }
 }
